@@ -8,7 +8,7 @@ const loginInput = loginForm.querySelector("input");
 //인자로 전달되는 요소를 event 변수로 잡음
 function loginSubmit(event) {
 	//새로고침을 막아줌
-	event.prevendDefault();
+	event.preventDefault();
 	console.log(event);
 }
 
