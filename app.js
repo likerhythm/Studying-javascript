@@ -5,17 +5,18 @@ const loginForm = document.getElementById("login-form");
 //document.querySelector("#login-form input")으로 대체 가능
 const loginInput = loginForm.querySelector("input");
 
-//login-form에서 button 태그를 가져온다.
-//document.querySelector("#login-form button")으로 대체 가능
-const loginButton = loginForm.querySelector("button");
-
-function loginButtonClicked() {
-	const username = loginInput.value;
+//인자로 전달되는 요소를 event 변수로 잡음
+function loginSubmit(event) {
+	//새로고침을 막아줌
+	event.prevendDefault();
+	console.log(event);
 }
 
-loginButton.addEventListener("click", loginButtonClicked);
+loginForm.addEventListener("submit", loginSubmit);
 
 
-//input의 유효성 검사를 작동시키기 위해서는 input이 form 안에 있어야 한다.
-//form 안에서 엔터를 누르고 input이 더 존재하지 않는다면 자동으로 submit 됨
-//form 안에 있는 버튼을 눌렀을 때도 자동으로 submit 됨
+//브라우저는 submit 동작을 하면 자동으로 새로고침 되도록 설계돼있음
+//또한 어떤 이벤트가 발생 했을 때 submit되는 요소를 자동으로 인자로 전달함(코드에서 event 변수)
+//새로고침 되는 것을 막아야함
+//새로고침이 되는 event가 submit이므로 loginForm에서 submit 이벤트를 감지해야함
+//정리하면 loginForm에서 submit 이벤트를 감지하면 새로고침 되는 것을 막고 전달되는 event인자를 잡는다.
