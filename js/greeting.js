@@ -14,9 +14,10 @@ function onLoginSubmit(event) {
   	const username = loginInput.value;
 	localStorage.setItem(USERNAME_KEY, username);
   	console.log(username);
-	paintGreetings(username)
+	paintGreetings(username);
 }
 
+//greeting 표현하기
 function paintGreetings(username){
 	greeting.innerText = `Hello ${username}`;
   	greeting.classList.remove(HIDDEN_CLASSNAME);
