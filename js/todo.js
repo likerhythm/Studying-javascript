@@ -8,6 +8,8 @@ function deleteToDo(event){
 	event.preventDefault();
 	const li = event.target.parentElement;
 	li.remove();
+	toDos = toDos.filter((item) => item.id !== parseInt(li.id));
+	saveToDos();
 }
 
 //localStorage에 todo리스트 저장
@@ -18,9 +20,10 @@ function saveToDos(){
 //todo리스트 표현하기
 function paintToDo(newTodo){
 	const li = document.createElement("li");
+	li.id = newTodo.id;
 	const span = document.createElement("span");
 	const button = document.createElement("button");
-	span.innerText = newTodo;
+	span.innerText = newTodo.text;
 	button.innerText = "X";
 	button.addEventListener("click", deleteToDo);
 	li.appendChild(span);
@@ -32,9 +35,13 @@ function paintToDo(newTodo){
 function handleToDoSubmit(event){
 	event.preventDefault();
 	const newToDo = toDoInput.value;
+	const newToDoObj = {
+		text: newToDo,
+		id: Date.now(),
+	}
 	toDoInput.value="";
-	toDos.push(newToDo);
-	paintToDo(newToDo);
+	toDos.push(newToDoObj);
+	paintToDo(newToDoObj);
 	saveToDos();
 }
 
@@ -49,5 +56,17 @@ const savedToDos = localStorage.getItem(TODOS_KEY);
 if (savedToDos !== null){
 	const parsedToDos = JSON.parse(savedToDos);
 	toDos = parsedToDos;
-	parsedToDos.forEach(sayHello);
+	parsedToDos.forEach(paintToDo);
 }
+
+//todo리스트 array 완전 초기화 하는 버튼
+const clearForm = document.querySelector("#toDoClearForm");
+const clearButton = clearForm.querySelector("button");
+
+function toDoClear(event){
+	console.log("button clicked");
+	toDos = [];
+	saveToDos();
+}
+
+clearButton.addEventListener("click", toDoClear);
